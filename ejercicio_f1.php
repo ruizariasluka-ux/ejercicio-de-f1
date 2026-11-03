@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Ejercicio de gestión de monoplazas.
- * Se puede ejecutar con: php ejercicio_f1.php
- */
-
 class Monoplaza
 {
     public string $nombrePiloto;
@@ -31,7 +26,6 @@ class Monoplaza
 
         $this->puntos += puntosPorPosicion($posicion, $this->categoria);
 
-        // La vuelta rápida da un punto en F1 y F2, si el piloto acaba entre los diez primeros.
         if ($vueltaRapida && $posicion <= 10 && in_array($this->categoria, ['F1', 'F2'], true)) {
             $this->puntos++;
         }
@@ -142,7 +136,6 @@ function posicionValida(int $posicion, string $categoria): bool
 
 function consultarPilotosOpenF1(): ?array
 {
-    // La sesión latest corresponde a la sesión más reciente de la temporada.
     $url = 'https://api.openf1.org/v1/drivers?session_key=latest';
     $opciones = stream_context_create(['http' => ['timeout' => 5]]);
     $respuesta = @file_get_contents($url, false, $opciones);
@@ -163,7 +156,7 @@ function consultarPilotosOpenF1(): ?array
     return array_values($pilotos);
 }
 
-$piloto = new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco');
+$piloto = new F1('Marco Velasco', 'Española', 16, 'España');
 $piloto->otorgarPuntos(1, true);
 echo $piloto->nombrePiloto . ' tiene ' . $piloto->puntos . " puntos.\n";
 
