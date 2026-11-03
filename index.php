@@ -5,10 +5,25 @@ $ejemplo = trim(ob_get_clean());
 
 $pilotos = [
     ['piloto' => new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco'), 'posicion' => 1, 'vueltaRapida' => true],
-    ['piloto' => new F2('Piloto de F2', 'Española', 44), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new F3('Piloto de F3', 'Española', 7, 'Academia F1'), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new F4('Piloto de F4', 'Española', 22, 'Equipo F4'), 'posicion' => 1, 'vueltaRapida' => false],
-    ['piloto' => new FAcademy('Piloto de F Academy', 'Española', 18, 160), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new F1('Lewis Hamilton', 'Británica', 44, 'Reino Unido'), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new F1('Max Verstappen', 'Neerlandesa', 1, 'Países Bajos'), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new F1('Lando Norris', 'Británica', 4, 'Reino Unido'), 'posicion' => 4, 'vueltaRapida' => false],
+    ['piloto' => new F2('Mick Schumacher', 'Alemana', 7), 'posicion' => 1, 'vueltaRapida' => true],
+    ['piloto' => new F2('Theo Pourchaire', 'Francesa', 10), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new F2('Felipe Drugovich', 'Brasileña', 11), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new F2('Jack Doohan', 'Australiana', 3), 'posicion' => 4, 'vueltaRapida' => false],
+    ['piloto' => new F3('Dennis Hauger', 'Noruega', 1, 'Red Bull'), 'posicion' => 1, 'vueltaRapida' => false],
+    ['piloto' => new F3('Franco Colapinto', 'Argentina', 12, 'Williams'), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new F3('Gabriel Bortoleto', 'Brasileña', 5, 'McLaren'), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new F3('Oliver Bearman', 'Británica', 6, 'Ferrari'), 'posicion' => 4, 'vueltaRapida' => false],
+    ['piloto' => new F4('Kimi Antonelli', 'Italiana', 21, 'Mercedes'), 'posicion' => 1, 'vueltaRapida' => false],
+    ['piloto' => new F4('Rafael Câmara', 'Brasileña', 88, 'Ferrari'), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new F4('Freddie Slater', 'Británica', 22, 'Prema'), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new F4('Ugo Ugochukwu', 'Estadounidense', 3, 'McLaren'), 'posicion' => 4, 'vueltaRapida' => false],
+    ['piloto' => new FAcademy('Abbi Pulling', 'Británica', 9, 160), 'posicion' => 1, 'vueltaRapida' => false],
+    ['piloto' => new FAcademy('Doriane Pin', 'Francesa', 28, 160), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new FAcademy('Maya Weug', 'Neerlandesa', 64, 160), 'posicion' => 3, 'vueltaRapida' => false],
+    ['piloto' => new FAcademy('Hamda Al Qubaisi', 'Emiratí', 5, 160), 'posicion' => 4, 'vueltaRapida' => false],
 ];
 
 foreach ($pilotos as $fila) {
@@ -46,7 +61,7 @@ $pilotosApi = consultarPilotosOpenF1();
     </section>
 
     <section class="panel">
-        <h2>Pilotos y puntos de la carrera</h2>
+        <h2>Pilotos de ejemplo y puntos</h2>
         <table>
             <thead><tr><th>Piloto</th><th>Categoría</th><th>Posición</th><th>Puntos</th></tr></thead>
             <tbody>

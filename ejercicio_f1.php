@@ -163,14 +163,7 @@ function consultarPilotosOpenF1(): ?array
     return array_values($pilotos);
 }
 
-// Ejemplo sencillo de uso
 $piloto = new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco');
 $piloto->otorgarPuntos(1, true);
 echo $piloto->nombrePiloto . ' tiene ' . $piloto->puntos . " puntos.\n";
-
-// Para consultar la API, descomenta estas líneas:
-// $pilotos = consultarPilotosOpenF1();
-// if ($pilotos !== null) {
-//     print_r($pilotos);
-// }
 
