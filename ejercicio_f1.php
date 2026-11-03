@@ -156,7 +156,7 @@ function consultarPilotosOpenF1(): ?array
     return array_values($pilotos);
 }
 
-$piloto = new F1('Marco Velasco', 'Española', 16, 'España');
+$piloto = new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco');
 $piloto->otorgarPuntos(1, true);
 echo $piloto->nombrePiloto . ' tiene ' . $piloto->puntos . " puntos.\n";
 

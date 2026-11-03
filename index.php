@@ -4,8 +4,8 @@ require_once __DIR__ . '/ejercicio_f1.php';
 $ejemplo = trim(ob_get_clean());
 
 $pilotos = [
-    ['piloto' => new F1('Marco Velasco', 'Española', 16, 'España'), 'posicion' => 1, 'vueltaRapida' => true],
-    ['piloto' => new F1('Leo Serrano', 'Española', 44, 'España'), 'posicion' => 2, 'vueltaRapida' => false],
+    ['piloto' => new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco'), 'posicion' => 1, 'vueltaRapida' => true],
+    ['piloto' => new F1('Lewis Hamilton', 'Británica', 44, 'Reino Unido'), 'posicion' => 2, 'vueltaRapida' => false],
     ['piloto' => new F1('Dario Montero', 'Italiana', 1, 'Italia'), 'posicion' => 3, 'vueltaRapida' => false],
     ['piloto' => new F1('Bruno Alcázar', 'Española', 4, 'España'), 'posicion' => 4, 'vueltaRapida' => false],
     ['piloto' => new F2('Adrián Casero', 'Española', 7), 'posicion' => 1, 'vueltaRapida' => true],
