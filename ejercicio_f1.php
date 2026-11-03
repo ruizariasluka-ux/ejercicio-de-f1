@@ -1,125 +1,176 @@
 <?php
 
-// Clases sencillas para guardar los datos de cada piloto.
+/**
+ * Ejercicio de gestión de monoplazas.
+ * Se puede ejecutar con: php ejercicio_f1.php
+ */
+
 class Monoplaza
 {
-    public $nombre;
-    public $nacionalidad;
-    public $numero;
-    public $puntos = 0;
-    public $categoria;
+    public string $nombrePiloto;
+    public string $nacionalidad;
+    public int $numero;
+    public int $puntos;
+    public string $categoria;
 
-    public function __construct($nombre, $nacionalidad, $numero, $categoria)
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, string $categoria)
     {
-        $this->nombre = $nombre;
+        $this->nombrePiloto = $nombrePiloto;
         $this->nacionalidad = $nacionalidad;
         $this->numero = $numero;
         $this->categoria = $categoria;
+        $this->puntos = 0;
     }
 
-    public function otorgarPuntos($posicion, $vueltaRapida = false)
+    public function otorgarPuntos(int $posicion, bool $vueltaRapida = false): void
     {
         if (!posicionValida($posicion, $this->categoria)) {
-            echo "Posición no válida.\n";
+            echo "La posición no es válida para {$this->nombrePiloto}.\n";
             return;
         }
+
         $this->puntos += puntosPorPosicion($posicion, $this->categoria);
-        // La vuelta rápida suma un punto en F1 y F2 si queda entre los diez primeros.
-        if ($vueltaRapida && $posicion <= 10 && ($this->categoria == 'F1' || $this->categoria == 'F2')) {
+
+        // La vuelta rápida da un punto en F1 y F2, si el piloto acaba entre los diez primeros.
+        if ($vueltaRapida && $posicion <= 10 && in_array($this->categoria, ['F1', 'F2'], true)) {
             $this->puntos++;
         }
     }
 
-    public function subirCategoria($tienePuntosSuficientes = false)
+    public function subirCategoria(bool $tienePuntosSuficientes = false): ?Monoplaza
     {
-        $categorias = ['F Academy' => 'F3', 'F3' => 'F2', 'F2' => 'F1'];
-        if (!isset($categorias[$this->categoria])) return null;
-        if ($this->categoria == 'F2' && !$tienePuntosSuficientes) return null;
-        return new Monoplaza($this->nombre, $this->nacionalidad, $this->numero, $categorias[$this->categoria]);
+        $siguiente = [
+            'F Academy' => 'F3',
+            'F3' => 'F2',
+            'F2' => 'F1',
+        ];
+
+        if (!isset($siguiente[$this->categoria])) {
+            echo "{$this->categoria} ya es la categoría más alta.\n";
+            return null;
+        }
+
+        if ($this->categoria === 'F2' && !$tienePuntosSuficientes) {
+            echo "No tiene los puntos de superlicencia necesarios para subir a F1.\n";
+            return null;
+        }
+
+        return new Monoplaza($this->nombrePiloto, $this->nacionalidad, $this->numero, $siguiente[$this->categoria]);
     }
 }
 
 class F1 extends Monoplaza
 {
-    public $pais;
-    public function __construct($nombre, $nacionalidad, $numero, $pais)
-    {
-        parent::__construct($nombre, $nacionalidad, $numero, 'F1');
-        $this->pais = $pais;
-    }
-}
+    public string $pais;
 
-class F2 extends Monoplaza
-{
-    public $tieneSuperlicencia;
-    public function __construct($nombre, $nacionalidad, $numero, $tieneSuperlicencia = false)
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, string $pais)
     {
-        parent::__construct($nombre, $nacionalidad, $numero, 'F2');
-        $this->tieneSuperlicencia = $tieneSuperlicencia;
+        parent::__construct($nombrePiloto, $nacionalidad, $numero, 'F1');
+        $this->pais = $pais;
     }
 }
 
 class F3 extends Monoplaza
 {
-    public $academia;
-    public function __construct($nombre, $nacionalidad, $numero, $academia)
+    public string $academia;
+
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, string $academia)
     {
-        parent::__construct($nombre, $nacionalidad, $numero, 'F3');
+        parent::__construct($nombrePiloto, $nacionalidad, $numero, 'F3');
         $this->academia = $academia;
+    }
+}
+
+class F2 extends Monoplaza
+{
+    public bool $tieneSuperlicencia;
+
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, bool $tieneSuperlicencia = false)
+    {
+        parent::__construct($nombrePiloto, $nacionalidad, $numero, 'F2');
+        $this->tieneSuperlicencia = $tieneSuperlicencia;
     }
 }
 
 class F4 extends Monoplaza
 {
-    public $patrocinador;
-    public function __construct($nombre, $nacionalidad, $numero, $patrocinador)
+    public string $patrocinador;
+
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, string $patrocinador)
     {
-        parent::__construct($nombre, $nacionalidad, $numero, 'F4');
+        parent::__construct($nombrePiloto, $nacionalidad, $numero, 'F4');
         $this->patrocinador = $patrocinador;
     }
 }
 
 class FAcademy extends Monoplaza
 {
-    public $potenciaMotor;
-    public function __construct($nombre, $nacionalidad, $numero, $potenciaMotor)
+    public int $potenciaMotor;
+
+    public function __construct(string $nombrePiloto, string $nacionalidad, int $numero, int $potenciaMotor)
     {
-        parent::__construct($nombre, $nacionalidad, $numero, 'F Academy');
+        parent::__construct($nombrePiloto, $nacionalidad, $numero, 'F Academy');
         $this->potenciaMotor = $potenciaMotor;
     }
 }
 
-function puntosPorPosicion($posicion, $categoria)
+function puntosPorPosicion(int $posicion, string $categoria): int
 {
-    $puntos = [
+    $tablas = [
         'F1' => [25, 18, 15, 12, 10, 8, 6, 4, 2, 1],
         'F4' => [25, 18, 15, 12, 10, 8, 6, 4, 2, 1],
         'F2' => [10, 8, 7, 6, 5, 4, 3, 2, 1],
         'F3' => [10, 8, 7, 6, 5, 4, 3, 2, 1],
-        'F Academy' => [18, 15, 12, 10, 8, 6, 4, 2, 1]
+        'F Academy' => [18, 15, 12, 10, 8, 6, 4, 2, 1],
     ];
-    return $puntos[$categoria][$posicion - 1] ?? 0;
+
+    return $tablas[$categoria][$posicion - 1] ?? 0;
 }
 
-function posicionValida($posicion, $categoria)
+function posicionValida(int $posicion, string $categoria): bool
 {
-    $maximos = ['F1' => 22, 'F2' => 24, 'F3' => 30, 'F4' => 30, 'F Academy' => 18];
-    return isset($maximos[$categoria]) && $posicion >= 1 && $posicion <= $maximos[$categoria];
+    $pilotos = [
+        'F1' => 22,
+        'F2' => 24,
+        'F3' => 30,
+        'F4' => 30,
+        'F Academy' => 18,
+    ];
+
+    return isset($pilotos[$categoria]) && $posicion >= 1 && $posicion <= $pilotos[$categoria];
 }
 
-function consultarPilotosOpenF1()
+function consultarPilotosOpenF1(): ?array
 {
-    $url = 'https://api.openf1.org/v1/drivers?driver_number=16&session_key=latest';
-    $respuesta = file_get_contents($url);
-    if ($respuesta === false) return null;
-    return json_decode($respuesta, true);
+    // La sesión latest corresponde a la sesión más reciente de la temporada.
+    $url = 'https://api.openf1.org/v1/drivers?session_key=latest';
+    $opciones = stream_context_create(['http' => ['timeout' => 5]]);
+    $respuesta = @file_get_contents($url, false, $opciones);
+
+    if ($respuesta === false) {
+        return null;
+    }
+
+    $datos = json_decode($respuesta, true);
+    if (!is_array($datos)) {
+        return null;
+    }
+
+    $pilotos = array_filter($datos, function ($piloto) {
+        return in_array($piloto['driver_number'] ?? 0, [16, 44], true);
+    });
+
+    return array_values($pilotos);
 }
 
-// Ejemplo de uso
+// Ejemplo sencillo de uso
 $piloto = new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco');
 $piloto->otorgarPuntos(1, true);
-echo $piloto->nombre . ' tiene ' . $piloto->puntos . " puntos.\n";
+echo $piloto->nombrePiloto . ' tiene ' . $piloto->puntos . " puntos.\n";
 
-// Para probar la API, descomenta estas líneas:
+// Para consultar la API, descomenta estas líneas:
 // $pilotos = consultarPilotosOpenF1();
-// print_r($pilotos);
+// if ($pilotos !== null) {
+//     print_r($pilotos);
+// }
+

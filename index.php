@@ -16,6 +16,7 @@ foreach ($pilotos as $fila) {
 }
 
 $categorias = ['F1', 'F2', 'F3', 'F4', 'F Academy'];
+$pilotosApi = consultarPilotosOpenF1();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,9 +51,8 @@ $categorias = ['F1', 'F2', 'F3', 'F4', 'F Academy'];
             <thead><tr><th>Piloto</th><th>Categoría</th><th>Posición</th><th>Puntos</th></tr></thead>
             <tbody>
             <?php foreach ($pilotos as $fila): ?>
-                <?php $nombre = $fila['piloto']->nombrePiloto ?? $fila['piloto']->nombre; ?>
                 <tr>
-                    <td><?= htmlspecialchars($nombre, ENT_QUOTES, 'UTF-8') ?></td>
+                    <td><?= htmlspecialchars($fila['piloto']->nombrePiloto ?? $fila['piloto']->nombre, ENT_QUOTES, 'UTF-8') ?></td>
                     <td><?= htmlspecialchars($fila['piloto']->categoria, ENT_QUOTES, 'UTF-8') ?></td>
                     <td><?= $fila['posicion'] ?></td>
                     <td><?= $fila['piloto']->puntos ?></td>
@@ -77,6 +77,29 @@ $categorias = ['F1', 'F2', 'F3', 'F4', 'F Academy'];
             <?php endforeach; ?>
             </tbody>
         </table>
+    </section>
+
+    <section class="panel">
+        <h2>Datos de OpenF1</h2>
+        <p class="nota">Pilotos con los dorsales 16 y 44 en la sesión más reciente.</p>
+        <?php if ($pilotosApi === null): ?>
+            <p>No se pudo conectar con OpenF1. Comprueba la conexión y vuelve a cargar la página.</p>
+        <?php elseif (count($pilotosApi) === 0): ?>
+            <p>La API no devolvió esos pilotos para la sesión más reciente.</p>
+        <?php else: ?>
+            <table>
+                <thead><tr><th>Dorsal</th><th>Piloto</th><th>Equipo</th></tr></thead>
+                <tbody>
+                <?php foreach ($pilotosApi as $pilotoApi): ?>
+                    <tr>
+                        <td><?= htmlspecialchars((string)$pilotoApi['driver_number'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($pilotoApi['full_name'] ?? 'Sin nombre', ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($pilotoApi['team_name'] ?? 'Sin equipo', ENT_QUOTES, 'UTF-8') ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </section>
 </main>
 </body>
