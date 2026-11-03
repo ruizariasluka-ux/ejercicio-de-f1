@@ -3,29 +3,6 @@ ob_start();
 require_once __DIR__ . '/ejercicio_f1.php';
 $ejemplo = trim(ob_get_clean());
 
-$pilotos = [
-    ['piloto' => new F1('Charles Leclerc', 'Monegasca', 16, 'Mónaco'), 'posicion' => 1, 'vueltaRapida' => true],
-    ['piloto' => new F1('Lewis Hamilton', 'Británica', 44, 'Reino Unido'), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new F1('Dario Montero', 'Italiana', 1, 'Italia'), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new F1('Bruno Alcázar', 'Española', 4, 'España'), 'posicion' => 4, 'vueltaRapida' => false],
-    ['piloto' => new F2('Adrián Casero', 'Española', 7), 'posicion' => 1, 'vueltaRapida' => true],
-    ['piloto' => new F2('Hugo Beltrán', 'Española', 10), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new F2('Nico Aranda', 'Española', 11), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new F2('Eric Molina', 'Española', 3), 'posicion' => 4, 'vueltaRapida' => false],
-    ['piloto' => new F3('Joel Ríos', 'Española', 1, 'Academia Norte'), 'posicion' => 1, 'vueltaRapida' => false],
-    ['piloto' => new F3('Pablo Luján', 'Española', 12, 'Academia Sur'), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new F3('Gael Navarro', 'Española', 5, 'Academia Este'), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new F3('Sergio Robles', 'Española', 6, 'Academia Oeste'), 'posicion' => 4, 'vueltaRapida' => false],
-    ['piloto' => new F4('Iván Cordero', 'Española', 21, 'Equipo Azul'), 'posicion' => 1, 'vueltaRapida' => false],
-    ['piloto' => new F4('Mario Salvatierra', 'Española', 88, 'Equipo Rojo'), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new F4('Enzo Figueroa', 'Española', 22, 'Equipo Verde'), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new F4('Raúl Mena', 'Española', 3, 'Equipo Blanco'), 'posicion' => 4, 'vueltaRapida' => false],
-    ['piloto' => new FAcademy('Laura Campos', 'Española', 9, 160), 'posicion' => 1, 'vueltaRapida' => false],
-    ['piloto' => new FAcademy('Alba Ferrer', 'Española', 28, 160), 'posicion' => 2, 'vueltaRapida' => false],
-    ['piloto' => new FAcademy('Carla Mendoza', 'Española', 64, 160), 'posicion' => 3, 'vueltaRapida' => false],
-    ['piloto' => new FAcademy('Noa Varela', 'Española', 5, 160), 'posicion' => 4, 'vueltaRapida' => false],
-];
-
 foreach ($pilotos as $fila) {
     $fila['piloto']->otorgarPuntos($fila['posicion'], $fila['vueltaRapida']);
 }
